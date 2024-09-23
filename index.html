@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta de Felicitación Interactiva</title>
+    <style>
+        @font-face {
+            font-family: 'LOVELYN';
+            src: url('ruta/a/tu/fuente/LOVELYN.ttf') format('truetype'); /* Cambia esta ruta según dónde esté tu archivo */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'LOVELYN', sans-serif;
+            background: linear-gradient(135deg, #e6f7ff, #b3e0ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 500px;
+            height: 350px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .envelope {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1.5s ease-in-out;
+        }
+
+        .envelope-front, .envelope-back, .envelope-flap, .letter {
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .envelope-front, .envelope-back {
+            height: 100%;
+        }
+
+        .envelope-front {
+            background-color: #ffcccb;
+            border: 5px solid #ff69b4;
+            border-image: linear-gradient(45deg, #ff69b4, #ff1493) 1;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .envelope-flap {
+            top: 0;
+            left: 0;
+            height: 50%;
+            background-color: #ffb6c1;
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top;
+            transition: transform 1s ease-in-out;
+            z-index: 4;
+        }
+
+        .envelope-back {
+            background-color: #ffcccb;
+            transform: rotateY(180deg);
+            z-index: 2;
+        }
+
+        .letter {
+            height: 110%;
+            top: 0;
+            background-color: white;
+            display: flex;
+            justify-content: flex-start; /* Alineación al inicio */
+            align-items: flex-start; /* Para alinear el contenido superiormente */
+            padding: 30px 20px; /* Más padding para evitar que el texto se corte */
+            text-align: center;
+            transform: translateY(100%) rotateX(180deg);
+            transition: transform 1s ease-in-out 0.5s;
+            z-index: 5;
+            overflow: auto;
+            max-height: 90%;
+            box-sizing: border-box;
+        }
+
+        .message {
+            max-width: 90%;
+            font-family: 'LOVELYN', sans-serif;
+        }
+
+        .envelope.notify {
+            animation: notify 2s ease-in-out;
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-10%) rotateX(0);
+        }
+
+        @keyframes notify {
+            0%, 25%, 75%, 100% { transform: translateX(0) rotateY(0); }
+            12.5%, 37.5%, 62.5%, 87.5% { transform: translateX(-10px) rotateY(0); }
+            50% { transform: translateX(10px) rotateY(0); }
+        }
+
+        h1 {
+            color: #ff69b4;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-family: 'LOVELYN', sans-serif;
+        }
+
+        p {
+            color: #ff1493;
+            font-size: 16px;
+            line-height: 1.5;
+            font-family: 'LOVELYN', sans-serif;
+        }
+
+        @media (max-width: 400px) {
+            .card {
+                width: 90%;
+                height: 60vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="envelope">
+            <div class="envelope-front"></div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-back"></div>
+            <div class="letter">
+                <div class="message">
+                    <h1><strong>¡Lo lograste!</strong></h1>
+                    <p>
+                        Cada esfuerzo, cada lágrima derramada, cada noche sin dormir y cada gota de sudor... Todo valió la pena. <br><br>
+                        Hoy no solo celebramos tu graduación, celebramos tu perseverancia, tu fortaleza y tu determinación para nunca rendirte. <br><br>
+                        Cada obstáculo que superaste te ha convertido en lo que eres hoy: alguien capaz de alcanzar cualquier meta que se proponga. <br><br>
+                        Y lamento no poder estar ahí, acompañándote en tu logro ni dándote el regalo que te mereces, pero este regalo es para ti, solo para ti. <br><br>
+                        Este logro es tuyo, te pertenece, porque luchaste por él con todo tu corazón.<br><br>
+                        Nunca lo olvides, eres muy linda, muy inteligente, te mereces esto y mucho mas.<br><br>
+                        <strong>Felicidades my short girl</strong>
+                        
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reproductor de música -->
+    <audio id="background-music" autoplay loop>
+        <source src="sound/Rosa Linn - SNAP (Lyrics).mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const envelope = document.querySelector('.envelope');
+            const music = document.getElementById('background-music');
+
+            function notifyAnimation() {
+                return new Promise((resolve) => {
+                    envelope.classList.add('notify');
+                    setTimeout(() => {
+                        envelope.classList.remove('notify');
+                        setTimeout(resolve, 1000);
+                    }, 2000);
+                });
+            }
+
+            async function animateEnvelope() {
+                await notifyAnimation();
+                await notifyAnimation();
+                envelope.classList.add('open');
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff']
+                    });
+                }, 1500);
+            }
+
+            setTimeout(animateEnvelope, 1000);
+
+            // Iniciar música
+            music.play();
+        });
+    </script>
+</body>
+</html>
