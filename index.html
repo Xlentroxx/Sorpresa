@@ -79,9 +79,9 @@
             top: 0;
             background-color: white;
             display: flex;
-            justify-content: flex-start; /* Alineación al inicio */
-            align-items: flex-start; /* Para alinear el contenido superiormente */
-            padding: 30px 20px; /* Más padding para evitar que el texto se corte */
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
             text-align: center;
             transform: translateY(100%) rotateX(180deg);
             transition: transform 1s ease-in-out 0.5s;
@@ -135,6 +135,7 @@
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <div class="card">
@@ -144,32 +145,35 @@
             <div class="envelope-back"></div>
             <div class="letter">
                 <div class="message">
-                    <h1><strong>¡Lo lograste!</strong></h1>
+                    <h1>¡Felicidades!</h1>
                     <p>
+                        🎓 <strong>¡Lo lograste!</strong> 🎓<br><br>
                         Cada esfuerzo, cada lágrima derramada, cada noche sin dormir y cada gota de sudor... Todo valió la pena. <br><br>
                         Hoy no solo celebramos tu graduación, celebramos tu perseverancia, tu fortaleza y tu determinación para nunca rendirte. <br><br>
                         Cada obstáculo que superaste te ha convertido en lo que eres hoy: alguien capaz de alcanzar cualquier meta que se proponga. <br><br>
                         Y lamento no poder estar ahí, acompañándote en tu logro ni dándote el regalo que te mereces, pero este regalo es para ti, solo para ti. <br><br>
-                        Este logro es tuyo, te pertenece, porque luchaste por él con todo tu corazón.<br><br>
-                        Nunca lo olvides, eres muy linda, muy inteligente, te mereces esto y mucho mas.<br><br>
-                        <strong>Felicidades my short girl</strong>
-                        
+                        Este logro es tuyo, te pertenece, porque luchaste por él con todo tu corazón. ¡El futuro es tuyo, y no hay límite para lo que puedes lograr! <br><br>
+                        <strong>¡Felicidades por esta gran victoria!</strong>
                     </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Reproductor de música -->
-    <audio id="backgroundmusic" autoplay loop>
+    <button id="play-music">Reproducir Música</button>
+    <audio id="background-music" loop>
         <source src="sound/Rosa Linn - SNAP (Lyrics).mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
     </audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const envelope = document.querySelector('.envelope');
-            document.getElementById('backgroundmusic').play();
-            
+            const music = document.getElementById('background-music');
+
+            document.getElementById('play-music').addEventListener('click', () => {
+                music.play();
+            });
 
             function notifyAnimation() {
                 return new Promise((resolve) => {
@@ -196,7 +200,6 @@
             }
 
             setTimeout(animateEnvelope, 1000);
-
         });
     </script>
 </body>
