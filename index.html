@@ -161,14 +161,15 @@
     </div>
 
     <!-- Reproductor de música -->
-    <audio id="background-music" autoplay loop>
+    <audio id="backgroundmusic" autoplay loop>
         <source src="sound/Rosa Linn - SNAP (Lyrics).mp3" type="audio/mpeg">
     </audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const envelope = document.querySelector('.envelope');
-            const music = document.getElementById('background-music');
+            document.getElementById('backgroundmusic').play();
+            
 
             function notifyAnimation() {
                 return new Promise((resolve) => {
@@ -196,8 +197,6 @@
 
             setTimeout(animateEnvelope, 1000);
 
-            // Iniciar música
-            music.play();
         });
     </script>
 </body>
