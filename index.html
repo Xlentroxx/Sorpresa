@@ -3,203 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta de Felicitación Interactiva</title>
+    <title>Página de Inicio</title>
     <style>
-        @font-face {
-            font-family: 'LOVELYN';
-            src: url('ruta/a/tu/fuente/LOVELYN.ttf') format('truetype'); /* Cambia esta ruta según dónde esté tu archivo */
-            font-weight: normal;
-            font-style: normal;
-        }
-
         body, html {
             height: 100%;
             margin: 0;
-            font-family: 'LOVELYN', sans-serif;
-            background: linear-gradient(135deg, #e6f7ff, #b3e0ff);
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .card {
-            width: 500px;
-            height: 350px;
-            position: relative;
-            perspective: 1000px;
-        }
-
-        .envelope {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            transform-style: preserve-3d;
-            transition: transform 1.5s ease-in-out;
-        }
-
-        .envelope-front, .envelope-back, .envelope-flap, .letter {
-            position: absolute;
-            width: 100%;
-            backface-visibility: hidden;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .envelope-front, .envelope-back {
-            height: 100%;
-        }
-
-        .envelope-front {
-            background-color: #ffcccb;
-            border: 5px solid #ff69b4;
-            border-image: linear-gradient(45deg, #ff69b4, #ff1493) 1;
-            overflow: hidden;
-            z-index: 3;
-        }
-
-        .envelope-flap {
-            top: 0;
-            left: 0;
-            height: 50%;
-            background-color: #ffb6c1;
-            clip-path: polygon(0 0, 50% 100%, 100% 0);
-            transform-origin: top;
-            transition: transform 1s ease-in-out;
-            z-index: 4;
-        }
-
-        .envelope-back {
-            background-color: #ffcccb;
-            transform: rotateY(180deg);
-            z-index: 2;
-        }
-
-        .letter {
-            height: 110%;
-            top: 0;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-            transform: translateY(100%) rotateX(180deg);
-            transition: transform 1s ease-in-out 0.5s;
-            z-index: 5;
-            overflow: auto;
-            max-height: 90%;
-            box-sizing: border-box;
-        }
-
-        .message {
-            max-width: 90%;
+            background-color: #ffcccb; /* Fondo en tonos de rosa */
             font-family: 'LOVELYN', sans-serif;
         }
 
-        .envelope.notify {
-            animation: notify 2s ease-in-out;
-        }
-
-        .envelope.open .envelope-flap {
-            transform: rotateX(180deg);
-        }
-
-        .envelope.open .letter {
-            transform: translateY(-10%) rotateX(0);
-        }
-
-        @keyframes notify {
-            0%, 25%, 75%, 100% { transform: translateX(0) rotateY(0); }
-            12.5%, 37.5%, 62.5%, 87.5% { transform: translateX(-10px) rotateY(0); }
-            50% { transform: translateX(10px) rotateY(0); }
-        }
-
-        h1 {
-            color: #ff69b4;
+        .button {
+            padding: 15px 30px;
             font-size: 24px;
-            margin-bottom: 15px;
-            font-family: 'LOVELYN', sans-serif;
+            color: white;
+            background-color: #ff69b4; /* Botón en tonos de rosa */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        p {
-            color: #ff1493;
-            font-size: 16px;
-            line-height: 1.5;
-            font-family: 'LOVELYN', sans-serif;
-        }
-
-        @media (max-width: 400px) {
-            .card {
-                width: 90%;
-                height: 60vw;
-            }
+        .button:hover {
+            background-color: #ff1493; /* Efecto hover */
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-    <div class="card">
-        <div class="envelope">
-            <div class="envelope-front"></div>
-            <div class="envelope-flap"></div>
-            <div class="envelope-back"></div>
-            <div class="letter">
-                <div class="message">
-                    <h1>¡Felicidades!</h1>
-                    <p>
-                        🎓 <strong>¡Lo lograste!</strong> 🎓<br><br>
-                        Cada esfuerzo, cada lágrima derramada, cada noche sin dormir y cada gota de sudor... Todo valió la pena. <br><br>
-                        Hoy no solo celebramos tu graduación, celebramos tu perseverancia, tu fortaleza y tu determinación para nunca rendirte. <br><br>
-                        Cada obstáculo que superaste te ha convertido en lo que eres hoy: alguien capaz de alcanzar cualquier meta que se proponga. <br><br>
-                        Y lamento no poder estar ahí, acompañándote en tu logro ni dándote el regalo que te mereces, pero este regalo es para ti, solo para ti. <br><br>
-                        Este logro es tuyo, te pertenece, porque luchaste por él con todo tu corazón. ¡El futuro es tuyo, y no hay límite para lo que puedes lograr! <br><br>
-                        <strong>¡Felicidades por esta gran victoria!</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <button id="play-music">Reproducir Música</button>
-    <audio id="background-music" loop>
-        <source src="sound/Rosa Linn - SNAP (Lyrics).mp3" type="audio/mpeg">
-        Tu navegador no soporta la reproducción de audio.
-    </audio>
+    <button class="button" id="start-button">Presiona aquí</button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const envelope = document.querySelector('.envelope');
-            const music = document.getElementById('background-music');
-
-            document.getElementById('play-music').addEventListener('click', () => {
-                music.play();
-            });
-
-            function notifyAnimation() {
-                return new Promise((resolve) => {
-                    envelope.classList.add('notify');
-                    setTimeout(() => {
-                        envelope.classList.remove('notify');
-                        setTimeout(resolve, 1000);
-                    }, 2000);
-                });
-            }
-
-            async function animateEnvelope() {
-                await notifyAnimation();
-                await notifyAnimation();
-                envelope.classList.add('open');
-                setTimeout(() => {
-                    confetti({
-                        particleCount: 100,
-                        spread: 70,
-                        origin: { y: 0.6 },
-                        colors: ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff']
-                    });
-                }, 1500);
-            }
-
-            setTimeout(animateEnvelope, 1000);
+        document.getElementById('start-button').addEventListener('click', function() {
+            const audio = new Audio('sound/Rosa Linn - SNAP (Lyrics).mp3');
+            audio.play();
+            window.location.href = 'tarjeta.html'; // Redirigir a la tarjeta
         });
     </script>
 </body>
